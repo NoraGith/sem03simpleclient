@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "172.17.0.4:8001")
+	conn, err := net.Dial("tcp", "172.17.0.2:8090")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,6 +28,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	} 
-	response := string(buf[:n])
+
+	dekryptertMelding := mycrypt.Krypter([]rune(string(buf[:n])), mycrypt.ALF_SEM03,len(mycrypt.ALF_SEM03)-4)
+	log.Println("Dekryptert melding: ", string(dekryptertMelding))
+
+	response := string(dekryptertMelding)
 	log.Printf("reply from proxy: %s", response)
 }
